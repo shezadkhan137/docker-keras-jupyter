@@ -89,6 +89,8 @@ RUN echo 'alias ll="ls --color=auto -lA"' >> /root/.bashrc \
 # default password: keras
 ENV PASSWD='sha1:98b767162d34:8da1bc3c75a0f29145769edc977375a373407824'
 
+RUN pip install bcolz
+
 # dump package lists
 RUN dpkg-query -l > /dpkg-query-l.txt \
  && pip2 freeze > /pip2-freeze.txt \
@@ -100,4 +102,4 @@ EXPOSE 8888
 EXPOSE 6006
 
 WORKDIR /srv/
-CMD /bin/bash -c 'jupyter notebook --no-browser --ip=* --NotebookApp.password="$PASSWD" "$@"'
+CMD /bin/bash -c 'jupyter notebook --no-browser --ip=* --allow-root --NotebookApp.password="$PASSWD" "$@"'
